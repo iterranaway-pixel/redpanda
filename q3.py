@@ -1,0 +1,10 @@
+import numpy as np
+arr=np.array([1,2,4,8,16])
+invalue=np.log(arr)
+log10vals=np.log10(arr)
+log2vals=np.log2(arr)
+expvalues=np.exp(arr)
+print("array",arr)
+print(log10vals)
+print(log2vals)
+print(expvalues)

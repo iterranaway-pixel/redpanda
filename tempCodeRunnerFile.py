@@ -1,0 +1,1 @@
+print(e.__Employee__salary)

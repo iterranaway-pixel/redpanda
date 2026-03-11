@@ -1,0 +1,16 @@
+import numpy as np
+import matplotlib.pyplot as plt
+angles_deg=np.array([0,30,45,60,90])
+angles_rad=np.array([0,30,45,60,90])
+sin_values=np.sin(angles_rad)
+cos_values=np.cos(angles_rad)
+tan_values=np.tan(angles_rad)
+plt.plot(angles_deg,sin_values,marker="o",label="sin(x)")
+plt.plot(angles_deg,cos_values,marker="o",label="cos(x)")
+plt.plot(angles_deg,tan_values,marker="o",label="tan(x)")
+plt.xlabel("angles(degrees)")
+plt.ylabel("trigonometric values")
+plt.title("trigonometric functions vs angles")
+plt.legend()
+plt.grid(True)
+plt.show()

@@ -1,0 +1,15 @@
+import numpy as np
+import matplotlib.pyplot as plt
+x=np.linspace(0,2*np.pi,50)
+sin_x=np.sin(x)
+cos_x=np.cos(x)
+tan_x=np.tan(x)
+plt.plot(x,sin_x,label="sin(x)")
+plt.plot(x,cos_x,label="cos(x)")
+plt.plot(x,tan_x,label="tan(x)")
+plt.xlabel("x values (radians)")
+plt.ylabel("function values")
+plt.title("sine,cosine,tangent curves")
+plt.legend()
+plt.grid(True)
+plt.show()
