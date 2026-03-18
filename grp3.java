@@ -1,15 +1,15 @@
-import java.util.*; // Import utility classes like ArrayList and List
+import java.util.*; // Import utility classes like ArrayList, List, Queue, LinkedList
 
 /**
- * GraphRepresentation class with DFS traversal for directed/undirected graphs.
- * Supports adjacency matrix, list, and DFS traversal.
+ * GraphRepresentation class with BFS traversal for directed/undirected graphs.
+ * Supports adjacency matrix, list, and BFS traversal using queue.
  */
-public class grp2 {
+public class grp3 {
     private int n; // Number of vertices in the graph
     private int[][] adjMatrix; // 2D array for adjacency matrix representation
     private List<List<Integer>> adjList; // List of lists for adjacency list representation
     private boolean isDirected; // Flag to indicate if graph is directed or undirected
-    private boolean[] visited; // Visited array for DFS traversal
+    private boolean[] visited; // Visited array for BFS traversal
 
     /**
      * Constructor to initialize graph with given number of vertices, type, and
@@ -19,7 +19,7 @@ public class grp2 {
      * @param isDirected true for directed, false for undirected
      * @param edges      2D array of edges {src, dest}
      */
-    public grp2(int n, boolean isDirected, int[][] edges) {
+    public grp3(int n, boolean isDirected, int[][] edges) {
         this.n = n; // Set number of vertices
         this.isDirected = isDirected; // Set directed/undirected flag
         this.adjMatrix = new int[n][n]; // Initialize n x n matrix with zeros
@@ -47,30 +47,37 @@ public class grp2 {
     }
 
     /**
-     * Recursive DFS from starting vertex v.
+     * BFS traversal starting from given vertex using queue (level order).
      * 
-     * @param v current vertex
+     * @param start starting vertex
      */
-    private void dfs(int v) {
-        visited[v] = true; // Mark current vertex as visited
-        System.out.print(v + " "); // Print the vertex (traversal order)
+    public void bfs(int start) {
+        Queue<Integer> queue = new LinkedList<>(); // Queue for BFS (FIFO)
+        visited[start] = true; // Mark start as visited
+        queue.add(start); // Enqueue start vertex
 
-        // Visit all adjacent vertices recursively
-        for (int neigh : adjList.get(v)) { // For each neighbor
-            if (!visited[neigh]) { // If not visited
-                dfs(neigh); // Recursive DFS call
+        while (!queue.isEmpty()) { // While queue not empty
+            int v = queue.poll(); // Dequeue front vertex
+            System.out.print(v + " "); // Print vertex (BFS order)
+
+            // Enqueue all unvisited neighbors
+            for (int neigh : adjList.get(v)) { // For each adjacent vertex
+                if (!visited[neigh]) { // If not visited
+                    visited[neigh] = true; // Mark as visited
+                    queue.add(neigh); // Enqueue it
+                }
             }
         }
     }
 
     /**
-     * Perform DFS traversal starting from vertex 0.
+     * Perform BFS traversal starting from vertex 0.
      */
-    public void dfsTraversal() {
-        System.out.print("DFS Traversal (from 0): ");
-        Arrays.fill(visited, false); // Reset visited array
-        dfs(0); // Start DFS from vertex 0
-        System.out.println(); // New line
+    public void bfsTraversal() {
+        System.out.print("BFS Traversal (from 0): ");
+        Arrays.fill(visited, false); // Reset visited array before traversal
+        bfs(0); // Start BFS from vertex 0
+        System.out.println(); // New line at end
     }
 
     /**
@@ -107,21 +114,21 @@ public class grp2 {
      */
     public static void main(String[] args) {
         // Sample Directed Graph: 4 vertices, edges 0->1, 0->2, 1->2, 2->3
-        // DFS expected: 0 1 2 3
+        // BFS expected: 0 1 2 3 (level order)
         System.out.println("=== DIRECTED GRAPH ===");
         int[][] directedEdges = { { 0, 1 }, { 0, 2 }, { 1, 2 }, { 2, 3 } };
-        grp2 directedGraph = new grp2(4, true, directedEdges);
+        grp3 directedGraph = new grp3(4, true, directedEdges);
         directedGraph.printMatrix();
         directedGraph.printList();
-        directedGraph.dfsTraversal();
+        directedGraph.bfsTraversal();
 
         // Sample Undirected Graph: 4 vertices, edges 0-1, 0-3, 1-2, 2-3
-        // DFS expected: 0 1 2 3 (or similar order)
+        // BFS expected: 0 1 3 2 (level order)
         System.out.println("=== UNDIRECTED GRAPH ===");
-        int[][] undirectedEdges = { { 0, 1 }, { 0, 2}, { 1, 3 }, { 1, 4},{2,4 }};
-        grp2 undirectedGraph = new grp2(5, false, undirectedEdges);
+        int[][] undirectedEdges = { { 0, 1 }, { 0, 3 }, { 1, 2 }, { 2, 3 } };
+        grp3 undirectedGraph = new grp3(4, false, undirectedEdges);
         undirectedGraph.printMatrix();
         undirectedGraph.printList();
-        undirectedGraph.dfsTraversal();
+        undirectedGraph.bfsTraversal();
     }
 }
